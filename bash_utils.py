@@ -48,7 +48,7 @@ def git_branch_status(args):
             rm = re.compile("(?P<branch>\S+)(:|$)\s*(ahead (?P<ahead>\d+))?,?\s*(behind (?P<behind>\d+))?")
             for line in lines:
                 line = line.strip()
-                row = {}
+                row = {"padding":"#  "}
                 rows.append(row)
                 match = lm.match(line)
                 remote = match.group("remote") if match.group("remote") else ""
@@ -64,7 +64,7 @@ def git_branch_status(args):
                     row["ahead"] = ""
                     row["behind"] = ""
                     row["remoteBranch"] = BC.PURPLE+"<local>"+BC.ENDC
-        cols = ["branch","current","ahead","behind","remoteBranch"]
+        cols = ["padding","branch","current","ahead","behind","remoteBranch"]
         counts={}
         for col in cols: 
             counts[col] = 0
