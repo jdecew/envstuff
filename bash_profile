@@ -6,7 +6,7 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 # Erase duplicates
 export HISTCONTROL=erasedups
 #export PS1="\[\033[0;31m\]\W\[\033[0m\]$ "
-export FIGNORE=$FIGNORE:.pyc
+export FIGNORE=$FIGNORE:.pyc:.DS_Store
 
 export HTTP_HOST='localhost'
 export ANDROID_HOME=~/android
