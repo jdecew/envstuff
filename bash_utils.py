@@ -43,7 +43,7 @@ def git_branch_status(args):
             lines = readfile.readlines()
             readfile.close()
             rows = []
-            lm = re.compile("(?P<current>[*]?)\s*(?P<local>\S+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(\[(?P<remote>.+)\])?.*$")
+            lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|no branch)+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(\[(?P<remote>.+)\])?.*$")
             #origin/newquests: ahead 5, behind 5
             rm = re.compile("(?P<branch>\S+)(:|$)\s*(ahead (?P<ahead>\d+))?,?\s*(behind (?P<behind>\d+))?")
             for line in lines:

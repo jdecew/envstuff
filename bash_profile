@@ -9,7 +9,7 @@ export HISTCONTROL=erasedups
 export FIGNORE=$FIGNORE:.pyc
 
 export HTTP_HOST='localhost'
-ANDROID_HOME=~/android
+export ANDROID_HOME=~/android
 
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
