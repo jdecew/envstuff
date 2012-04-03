@@ -1,6 +1,8 @@
 import os, sys, subprocess, random, re
     
 class BC:
+    LIGHT_GRAY = '\033[37m'
+    DARK_GRAY = '\033[30m'
     RED = '\033[31m'
     RED_BOLD = '\033[1;31m'
     GREEN = '\033[32m'
@@ -33,6 +35,7 @@ def main():
     return 1
 
 def git_branch_status(args):
+    verbose = True if "-v" in args else False
     filename = "/tmp/git_branch_status_"+str(random.randint(1000,9999))+".txt"
     try:
         writefile = open(filename,"w")
@@ -43,15 +46,16 @@ def git_branch_status(args):
             lines = readfile.readlines()
             readfile.close()
             rows = []
-            lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|no branch)+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(\[(?P<remote>.+)\])?.*$")
-            #origin/newquests: ahead 5, behind 5
-            rm = re.compile("(?P<branch>\S+)(:|$)\s*(ahead (?P<ahead>\d+))?,?\s*(behind (?P<behind>\d+))?")
+            lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|no branch)+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(\[(?P<remote>.+)\])? ?(?P<message>.*)$")
+            rm = re.compile("(?P<branch>\S+)(:|$)\s*(ahead (?P<ahead>\d+))?,?\s*(behind (?P<behind>\d+))?") #origin/foo: ahead 5, behind 5
             for line in lines:
                 line = line.strip()
                 row = {"padding":"#  "}
                 rows.append(row)
                 match = lm.match(line)
                 remote = match.group("remote") if match.group("remote") else ""
+                row["sha"] = BC.LIGHT_GRAY+match.group("sha")+BC.ENDC
+                row["message"] = BC.LIGHT_GRAY+match.group("message")+BC.ENDC
                 row["current"] = BC.YELLOW+u"\u2713"+BC.ENDC if match.group("current") else ""
                 color = BC.GREEN if match.group("current") else ""
                 row["branch"] = color+match.group("local")+BC.ENDC+" "
@@ -65,6 +69,7 @@ def git_branch_status(args):
                     row["behind"] = ""
                     row["remoteBranch"] = BC.PURPLE+"<local>"+BC.ENDC
         cols = ["padding","branch","current","ahead","behind","remoteBranch"]
+        if verbose: cols += ["sha","message"]
         counts={}
         for col in cols: 
             counts[col] = 0
