@@ -68,8 +68,8 @@ def git_branch_status(args):
                     row["ahead"] = ""
                     row["behind"] = ""
                     row["remoteBranch"] = BC.PURPLE+"<local>"+BC.ENDC
-        cols = ["padding","branch","current","ahead","behind","remoteBranch"]
-        if verbose: cols += ["sha","message"]
+        cols = ["padding","branch","current","ahead","behind","remoteBranch","sha"]
+        if verbose: cols += ["message"]
         counts={}
         for col in cols: 
             counts[col] = 0
