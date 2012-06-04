@@ -10,6 +10,10 @@ export FIGNORE=$FIGNORE:.pyc:.DS_Store
 
 export HTTP_HOST='localhost'
 export ANDROID_HOME=~/android
+export ANDROID_ROOT=$ANDROID_HOME
+export NDK_ROOT=~/android-ndk-r8
+
+export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
 
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
