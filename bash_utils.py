@@ -46,7 +46,7 @@ def git_branch_status(args):
             lines = readfile.readlines()
             readfile.close()
             rows = []
-            lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|no branch)+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(\[(?P<remote>.+)\])? ?(?P<message>.*)$")
+            lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|no branch)+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(\[(?P<remote>[^]]+)\])? ?(?P<message>.*)$")
             rm = re.compile("(?P<branch>\S+)(:|$)\s*(ahead (?P<ahead>\d+))?,?\s*(behind (?P<behind>\d+))?") #origin/foo: ahead 5, behind 5
             for line in lines:
                 line = line.strip()
