@@ -68,21 +68,21 @@ def git_branch_status(args):
                     row["ahead"] = ""
                     row["behind"] = ""
                     row["remoteBranch"] = BC.PURPLE+"<local>"+BC.ENDC
-        cols = ["padding","branch","current","ahead","behind","remoteBranch","sha"]
-        if verbose: cols += ["message"]
-        counts={}
-        for col in cols: 
-            counts[col] = 0
-        for row in rows:
+            cols = ["padding","branch","current","ahead","behind","remoteBranch","sha"]
+            if verbose: cols += ["message"]
+            counts={}
             for col in cols: 
-                counts[col] = max(counts[col], vislen(row[col]))
-        for col, count in counts.items():
-            if count == 0:
-                cols.remove(col)
-        for row in rows:
-            for col in cols:
-                print visljust(row[col], counts[col]),
-            print ""
+                counts[col] = 0
+            for row in rows:
+                for col in cols: 
+                    counts[col] = max(counts[col], vislen(row[col]))
+            for col, count in counts.items():
+                if count == 0:
+                    cols.remove(col)
+            for row in rows:
+                for col in cols:
+                    print visljust(row[col], counts[col]),
+                print ""
     finally:
         try: os.remove(filename)
         except: pass
