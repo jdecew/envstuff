@@ -72,3 +72,4 @@ alias lsla="ls -la"
 alias where=pwd
 alias cops="git co ~/workspace/tapzooandroid/*/project.properties"
 alias gb="python ~/personal/envstuff/bash_utils.py git_branch_status"
+alias gf="git fetch && gb"
