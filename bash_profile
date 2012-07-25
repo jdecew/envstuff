@@ -65,7 +65,7 @@ PS1='\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]:\[${c_cyan}\]\W\[${c_sg
 # git alias
 alias gs="git status"
 alias gd="git diff"
-alias gld='gl dragon'
+alias gld='gl dragonwithassets'
 alias jgpp="git pull && ant clean test && git push"
 alias la="ls -a"
 alias lsla="ls -la"
@@ -73,3 +73,5 @@ alias where=pwd
 alias cops="git co ~/workspace/tapzooandroid/*/project.properties"
 alias gb="python ~/personal/envstuff/bash_utils.py git_branch_status"
 alias gf="git fetch && gb"
+alias pt="adb pull /mnt/sdcard/IwTrace.txt"
+alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git rebase && git co master && git rebase svn-tracker && git push github master"
