@@ -1,3 +1,6 @@
+# Turn off the dashboard pane of OSX
+./dashboard.sh off
+
 # Change the default behavior of "git push" to only push the current branch
 # http://stackoverflow.com/questions/948354/git-push-current-branch
 git config --global --add push.default upstream
