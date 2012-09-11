@@ -12,6 +12,7 @@ export HTTP_HOST='localhost'
 export ANDROID_HOME=~/android
 export ANDROID_ROOT=$ANDROID_HOME
 export NDK_ROOT=~/android-ndk-r8
+export ENVSTUFF=~/personal/envstuff
 
 export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
 
@@ -62,16 +63,21 @@ gl () {
 #PS1='\[${c_cyan}\]\W\[${c_sgr0}\] (\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\])$ '
 PS1='\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]:\[${c_cyan}\]\W\[${c_sgr0}\]$ '
 
+# bash aliases
+alias .="pwd"
+alias la="ls -a"
+alias lsla="ls -la"
+alias where="pwd"
+
 # git alias
 alias gs="git status"
 alias gd="git diff"
 alias gld='gl dragonwithassets'
-alias jgpp="git pull && ant clean test && git push"
-alias la="ls -a"
-alias lsla="ls -la"
-alias where=pwd
-alias cops="git co ~/workspace/tapzooandroid/*/project.properties"
+#alias jgpp="git pull && ant clean test && git push"
+#alias cops="git co ~/workspace/tapzooandroid/*/project.properties"
 alias gb="python ~/personal/envstuff/bash_utils.py git_branch_status"
 alias gf="git fetch && gb"
 alias pt="adb pull /mnt/sdcard/IwTrace.txt"
 alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git rebase && git co master && git rebase svn-tracker && git push github master && git co working && git rebase master"
+alias p4login="p4 -p inbound.iw3d.co.uk:1666 -u pocket.gems login < $ENVSTUFF/secret/.iw3d-p4.pass"
+alias pf="p4 -p inbound.iw3d.co.uk:1666 -u pocket.gems"
