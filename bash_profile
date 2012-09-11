@@ -13,6 +13,8 @@ export ANDROID_HOME=~/android
 export ANDROID_ROOT=$ANDROID_HOME
 export NDK_ROOT=~/android-ndk-r8
 export ENVSTUFF=~/personal/envstuff
+export P4CONFIG=.p4config
+export P4EDITOR=nano
 
 export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
 
@@ -79,5 +81,8 @@ alias gb="python ~/personal/envstuff/bash_utils.py git_branch_status"
 alias gf="git fetch && gb"
 alias pt="adb pull /mnt/sdcard/IwTrace.txt"
 alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git rebase && git co master && git rebase svn-tracker && git push github master && git co working && git rebase master"
-alias p4login="p4 -p inbound.iw3d.co.uk:1666 -u pocket.gems login < $ENVSTUFF/secret/.iw3d-p4.pass"
-alias pf="p4 -p inbound.iw3d.co.uk:1666 -u pocket.gems"
+
+# marmalade aliases
+alias mkb60="/Developer/Marmalade/6.0/s3e/bin/mkb"
+alias mkb61="/Developer/Marmalade/6.1/s3e/bin/mkb"
+alias p4login="p4 login < $ENVSTUFF/secret/.iw3d-p4.pass"
