@@ -86,3 +86,4 @@ alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git re
 alias mkb60="/Developer/Marmalade/6.0/s3e/bin/mkb"
 alias mkb61="/Developer/Marmalade/6.1/s3e/bin/mkb"
 alias p4login="p4 login < $ENVSTUFF/secret/.iw3d-p4.pass"
+alias p4pp="cd ~/marmalade/pcove/pocketgems && p4login && $ENVSTUFF/p4pp.sh"
