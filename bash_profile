@@ -16,7 +16,7 @@ export ENVSTUFF=~/personal/envstuff
 export P4CONFIG=.p4config
 export P4EDITOR=nano
 
-export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
+export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH:/Developer/Marmalade/6.2/s3e/bin/
 
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
@@ -85,6 +85,7 @@ alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git re
 # marmalade aliases
 alias mkb60="/Developer/Marmalade/6.0/s3e/bin/mkb"
 alias mkb61="/Developer/Marmalade/6.1/s3e/bin/mkb"
+alias mkb62="/Developer/Marmalade/6.2/s3e/bin/mkb"
 alias p4login="p4 login < $ENVSTUFF/secret/.iw3d-p4.pass"
 alias p4pp="cd ~/marmalade/pcove/pocketgems && p4login && $ENVSTUFF/p4pp.sh"
 alias marmaladefix="$ENVSTUFF/marmaladefix.sh"
