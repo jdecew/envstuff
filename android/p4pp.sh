@@ -12,7 +12,7 @@ git push shared i3d_master
 
 ## in the pocketgems repo
 cd ~/marmalade/pcove/pocketgems
-git fetch
+git fetch shared
 # pull p4 to local master
 git p4 sync
 git co master
@@ -21,6 +21,6 @@ git rebase
 git co pocketgems_master
 git rebase p4/master
 git push shared pocketgems_master
-
+git co master
 
 
