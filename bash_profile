@@ -80,6 +80,7 @@ alias gld='gl dragonwithassets'
 alias gb="python ~/personal/envstuff/bash_utils.py git_branch_status"
 alias gf="git fetch && gb"
 alias pt="adb pull /mnt/sdcard/IwTrace.txt"
+alias gu="git submodule update --init --recursive"
 alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git rebase && git co master && git rebase svn-tracker && git push github master && git co working && git rebase master"
 
 # marmalade aliases
