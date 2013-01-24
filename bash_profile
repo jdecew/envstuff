@@ -16,7 +16,12 @@ export ENVSTUFF=~/personal/envstuff
 export P4CONFIG=.p4config
 export P4EDITOR=nano
 
-export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH:/Developer/Marmalade/6.2/s3e/bin/
+export DCF_ROOT=~/apportable/apportable_sdk
+export APPORTABLE_ANDROID_HOME=/Users/jeffreydecew/apportable/apportable_sdk/toolchain/macosx/android-sdk
+
+
+export ANDROID_PATH=$APPORTABLE_ANDROID_HOME/tools:$APPORTABLE_ANDROID_HOME/platform-tools
+export PATH=$ANDROID_PATH:$PATH:/Developer/Marmalade/6.2/s3e/bin/:$DCF_ROOT/bin
 
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
@@ -82,6 +87,7 @@ alias gf="git fetch && gb"
 alias pt="adb pull /mnt/sdcard/IwTrace.txt"
 alias gu="git submodule update --init --recursive"
 alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git rebase && git co master && git rebase svn-tracker && git push github master && git co working && git rebase master"
+alias gitrmdeleted='git status --porcelain | grep "^ D " | sed "s/^ D //" | xargs git rm'
 
 # marmalade aliases
 alias mkb60="/Developer/Marmalade/6.0/s3e/bin/mkb"
