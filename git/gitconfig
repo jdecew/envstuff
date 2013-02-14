@@ -1,0 +1,19 @@
+[user]
+	name = Jeff DeCew
+	email = jdecew@pocketgems.com
+[color]
+	ui = always
+[core]
+	editor = nano
+	autocrlf = false
+	whitespace = cr-at-eol
+[alias]
+	co = checkout
+	cpick = cherry-pick
+[push]
+	default = upstream
+[mergetool "diffmerge"]
+	cmd = diffmerge --merge\n--result=$MERGED $LOCAL $BASE $REMOTE
+	trustExitCode = true
+[merge]
+	tool = diffmerge
