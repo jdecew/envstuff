@@ -19,10 +19,10 @@ export P4EDITOR=nano
 export DCF_ROOT=~/apportable/apportable_sdk
 export APPORTABLE_ANDROID_HOME=/Users/jeffreydecew/apportable/apportable_sdk/toolchain/macosx/android-sdk
 
-export XCODE_BIN=/Applications/Xcode.app/Contents/Developer/usr/bin/
+export XCODE_BIN=/Applications/Xcode.app/Contents/Developer/usr/bin
 
 export ANDROID_PATH=$APPORTABLE_ANDROID_HOME/tools:$APPORTABLE_ANDROID_HOME/platform-tools
-export PATH=$ANDROID_PATH:$PATH:/Developer/Marmalade/6.2/s3e/bin/:$DCF_ROOT/bin:$XCODE_BIN
+export PATH=$ANDROID_PATH:/usr/local/bin:$PATH:/Developer/Marmalade/6.2/s3e/bin:$DCF_ROOT/bin:$XCODE_BIN
 
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
