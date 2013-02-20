@@ -87,6 +87,7 @@ alias gld='gl dragonwithassets'
 alias gb="python ~/personal/envstuff/bash_utils.py git_branch_status"
 alias gf="git fetch && gb"
 alias pt="adb pull /mnt/sdcard/IwTrace.txt"
+alias gc='clear ; echo -e "\033[32m $ git status\033[0m" ; git status ; echo -e "\033[32m $ gb\033[0m"; gb'
 alias gu="git submodule sync && git submodule update --init --recursive"
 alias deepclean="gfor git clean -xdf"
 alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git rebase && git co master && git rebase svn-tracker && git push github master && git co working && git rebase master"
