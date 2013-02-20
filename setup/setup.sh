@@ -9,3 +9,13 @@ then
 else
     echo "No changes made!"
 fi
+
+confirm "This will overwrite your ~/Library/KeyBindings/!!  Do you want to continue?"
+if [ $? -eq 0 ]
+then
+cp -r KeyBindings ~/Library
+echo "Overwrote ~/Library/KeyBindings/!"
+else
+echo "No changes made!"
+fi
+
