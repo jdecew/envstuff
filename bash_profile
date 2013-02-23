@@ -102,6 +102,11 @@ alias p4pp="cd ~/marmalade/pcove/pocketgems && p4login && $ENVSTUFF/android/p4pp
 alias p4tunnel="$ENVSTUFF/secret/p4tunnel.sh"
 alias tunnelfix="$ENVSTUFF/android/tunnelfix.sh"
 alias marmaladefix="$ENVSTUFF/android/marmaladefix.sh"
+
+# apportable aliases
+alias dt7="TARGET_ARCH_ABI=armv7a dt"
+
+# keygen aliases
 alias apksign="~/workspace/androidsigning/tools/apksign.py"
 alias apkmod="~/workspace/androidsigning/tools/apkmod.py"
 alias keygen="~/workspace/androidsigning/tools/keygen.py"
