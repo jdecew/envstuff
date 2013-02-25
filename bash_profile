@@ -24,6 +24,8 @@ export XCODE_BIN=/Applications/Xcode.app/Contents/Developer/usr/bin
 export ANDROID_PATH=$APPORTABLE_ANDROID_HOME/tools:$APPORTABLE_ANDROID_HOME/platform-tools
 export PATH=$ANDROID_PATH:/usr/local/bin:$PATH:/Developer/Marmalade/6.2/s3e/bin:$DCF_ROOT/bin:$XCODE_BIN
 
+export CGDB=/usr/local/bin/cgdb
+
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
 c_cyan=`tput setaf 6`
