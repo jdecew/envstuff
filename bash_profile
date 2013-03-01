@@ -112,4 +112,5 @@ alias dt7="TARGET_ARCH_ABI=armv7a dt"
 # keygen aliases
 alias apksign="~/workspace/androidsigning/tools/apksign.py"
 alias apkmod="~/workspace/androidsigning/tools/apkmod.py"
+alias apkinfo="~/workspace/androidsigning/tools/apkinfo.py"
 alias keygen="~/workspace/androidsigning/tools/keygen.py"
