@@ -87,6 +87,7 @@ alias gld='gl dragonwithassets'
 #alias jgpp="git pull && ant clean test && git push"
 #alias cops="git co ~/workspace/tapzooandroid/*/project.properties"
 alias gb="python ~/personal/envstuff/bash_utils.py git_branch_status"
+alias gbpu="python ~/personal/envstuff/bash_utils.py git_branch_pull_upstream"
 alias gf="git fetch && gb"
 alias pt="adb pull /mnt/sdcard/IwTrace.txt"
 alias gc='clear ; echo -e "\033[32m $ git status\033[0m" ; git status ; echo -e "\033[32m $ gb\033[0m"; gb'
