@@ -28,6 +28,11 @@ export CGDB=/usr/local/bin/cgdb
 
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
+c_yellow=`tput setaf 3`
+c_blue=`tput setaf 4`
+c_purple=`tput setaf 5`
+c_gray=`tput setaf 8`
+c_gray2=`tput setaf 7`
 c_cyan=`tput setaf 6`
 c_red=`tput setaf 1`
 c_green=`tput setaf 2`
@@ -71,7 +76,8 @@ gl () {
 }
 
 #PS1='\[${c_cyan}\]\W\[${c_sgr0}\] (\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\])$ '
-PS1='\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]:\[${c_cyan}\]\W\[${c_sgr0}\]$ '
+#PS1='\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]:\[${c_cyan}\]\W\[${c_sgr0}\]$ '
+PS1='\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]\[${c_gray}\]$(git log -1 --format=" %h " 2>/dev/null)\[${c_cyan}\]\W\[${c_sgr0}\]$ '
 
 # bash aliases
 alias .="pwd"
