@@ -1,5 +1,10 @@
-import os, sys, subprocess, random, re
-    
+import argparse
+import os
+import random
+import re
+import subprocess
+import sys
+
 class BC:
     LIGHT_GRAY = '\033[37m'
     DARK_GRAY = '\033[30m'
@@ -36,31 +41,35 @@ def main():
     print "Unknown util: "+sys.argv[1]
     return 1
 
-def git_branch_pull_upstream(args):
-    dryrun = True if "-n" in args else False
-    force = True if "-f" in args else False
-    loud = True if "-q" not in args else False
-    if len(args) < 1:
-        print "usage: git_branch_pull_upstream <localbranch> [-f] [-q] [-n]"
-        return
-    branch = args[0]
+def git_branch_pull_upstream(rawargs):
+    parser = argparse.ArgumentParser(prog='git_branch_pull_upstream')
+    parser.add_argument('localbranch', help='local branch')
+    parser.add_argument('--dryrun', '-n', action='store_true', help='dry run')
+    parser.add_argument('--force', '-f', action='store_true', help='force')
+    parser.add_argument('--quiet', '-q', action='store_true', help='quiet')
+    args = parser.parse_args(rawargs)
+
+    dryrun = not not args.dryrun
+    force = not not args.force
+    loud = not args.quiet
+    branch = args.localbranch
     localbranches = bash_output("git branch --no-color --list '%s'" % branch)
     if localbranches is None:
         # not a git repo; user already warned via stdout
-        return
+        return 1
     if localbranches not in ("  "+branch+"\n", "* "+branch+"\n"):
         print localbranches
         print "error: '%s' is not a local branch" % branch
-        return
+        return 1
     upstream = bash_output("git for-each-ref --format='%%(upstream:short)' -- 'refs/heads/%s'" % branch).strip()
     if not upstream:
         print "error: '%s' has no upstream" % branch
-        return
+        return 1
     branch_sha = git_merge_base(branch)
     upstream_sha = git_merge_base(upstream)
     if branch_sha == upstream_sha:
         print "Already up to date."
-        return
+        return 1
     mergebase = git_merge_base(branch_sha, upstream_sha)
     ahead = git_diff_count(mergebase, branch_sha)
     behind = git_diff_count(mergebase, upstream_sha)
@@ -69,11 +78,11 @@ def git_branch_pull_upstream(args):
     plusminus = "<%s>" % ("%s %s" % (plus, minus)).strip()
     if ahead and not force:
         print "error: can't pull %s upstream to %s <+%s -%s> (%s..%s) (Forced update required)" % (branch, upstream, ahead, behind, branch_sha[:7], upstream_sha[:7])
-        return
+        return 1
     verb = "would pull" if dryrun else "pulling"
     print "%s %s upstream to %s %s (%s..%s)" % colored_l((verb, branch, upstream, plusminus, branch_sha[:7], upstream_sha[:7]), (None, BC.GREEN, BC.CYAN, None, None, None))
     if dryrun:
-        return
+        return 0
     gitfolder = get_git_folder()
     reffile = os.path.join(gitfolder, "refs", "heads", branch)
     if not os.path.isfile(reffile):
@@ -82,15 +91,20 @@ def git_branch_pull_upstream(args):
         print "fatal: reffile contents not as expected"
     with open(reffile,'w') as f:
         f.write(upstream_sha+"\n")
+    return 0
     
-def git_branch_status(args):
-    verbose = True if "-v" in args else False
+def git_branch_status(rawargs):
+    parser = argparse.ArgumentParser(prog='git_branch_status')
+    parser.add_argument('--verbose', '-v', action='store_true', help='include commit message')
+    args = parser.parse_args(rawargs)
+
+    verbose = not not args.verbose
     output = bash_output('git branch --no-color -v -v')
     if not output:
-        return
+        return 1
     lines = output.splitlines()
     rows = []
-    lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|no branch)+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(\[(?P<remote>[^]]+)\])? ?(?P<message>.*)$")
+    lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|no branch)+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(?P<fullmessage>(\[(?P<remote>[^]]+)\])? ?(?P<message>.*))$")
     rm = re.compile("(?P<branch>\S+)(:|$)\s*(ahead (?P<ahead>\d+))?,?\s*(behind (?P<behind>\d+))?") #origin/foo: ahead 5, behind 5
     for line in lines:
         line = line.strip()
@@ -105,10 +119,13 @@ def git_branch_status(args):
         row["branch"] = color+match.group("local")+BC.ENDC+" "
         if remote:
             rmatch = rm.match(remote)
-            row["ahead"] = BC.GREEN_BOLD+"+"+rmatch.group("ahead")+BC.ENDC if rmatch.group("ahead") else ""
-            row["behind"] = BC.RED_BOLD+"-"+rmatch.group("behind")+BC.ENDC if rmatch.group("behind") else ""
-            row["remoteBranch"] = BC.CYAN+rmatch.group("branch")+BC.ENDC
-        else:
+            if rmatch:
+                row["ahead"] = BC.GREEN_BOLD+"+"+rmatch.group("ahead")+BC.ENDC if rmatch.group("ahead") else ""
+                row["behind"] = BC.RED_BOLD+"-"+rmatch.group("behind")+BC.ENDC if rmatch.group("behind") else ""
+                row["remoteBranch"] = BC.CYAN+rmatch.group("branch")+BC.ENDC
+            else:
+                row["message"] = BC.LIGHT_GRAY+match.group("fullmessage")+BC.ENDC
+        if not remote or not rmatch:
             row["ahead"] = ""
             row["behind"] = ""
             row["remoteBranch"] = BC.PURPLE+"<local>"+BC.ENDC
@@ -127,6 +144,7 @@ def git_branch_status(args):
         for col in cols:
             print visljust(row[col], counts[col]),
         print ""
+    return 0
 
 def get_git_folder():
     path = os.path.abspath(".")
