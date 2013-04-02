@@ -8,6 +8,7 @@
 	autocrlf = false
 	whitespace = cr-at-eol
 [alias]
+	sgrep = "!f() { git --no-pager grep \"$1\"; git submodule foreach \"git --no-pager grep '$1'; true\" | grep -B 1 \"$1\"; }; f"
 	co = checkout
 	cpick = cherry-pick
 [push]
