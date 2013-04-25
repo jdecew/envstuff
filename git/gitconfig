@@ -7,6 +7,7 @@
 	editor = nano
 	autocrlf = false
 	whitespace = cr-at-eol
+	trustctime = false
 [alias]
 	sgrep = "!f() { git --no-pager grep \"$1\"; git submodule foreach --recursive \"git --no-pager grep '$1'; true\" | grep -B 1 \"$1\"; }; f"
 	co = checkout
