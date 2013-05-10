@@ -99,6 +99,7 @@ alias pt="adb pull /mnt/sdcard/IwTrace.txt"
 alias gc='clear ; echo -e "\033[32m $ git status\033[0m" ; git status ; echo -e "\033[32m $ gb\033[0m"; gb'
 alias gu="git submodule sync && git submodule update --init --recursive"
 alias deepclean="gfor git clean -xdf"
+alias csvtxt="~/personal/envstuff/csvtxts.py"
 alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git rebase && git co master && git rebase svn-tracker && git push github master && git co working && git rebase master"
 alias gitrmdeleted='git status --porcelain | grep "^ D " | sed "s/^ D //" | xargs git rm'
 
