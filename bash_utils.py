@@ -85,10 +85,16 @@ def git_branch_pull_upstream(rawargs):
         return 0
     gitfolder = get_git_folder()
     reffile = os.path.join(gitfolder, "refs", "heads", branch)
-    if not os.path.isfile(reffile):
-        print "fatal: reffile not a file: %s" % reffile
-    if open(reffile).read() != branch_sha + "\n":
-        print "fatal: reffile contents not as expected"
+    if os.path.isfile(reffile):
+        with open(reffile) as f:
+            if f.read() != branch_sha + "\n":
+                print "fatal: reffile contents not as expected"
+                return 1
+    elif os.path.exists(reffile):
+        print "fatal: reffile exists but not a file: %s" % reffile
+        return 1
+    else:
+        print "warning: creating nonexistent reffile (did you run 'git remote prune'?)"
     with open(reffile,'w') as f:
         f.write(upstream_sha+"\n")
     return 0
