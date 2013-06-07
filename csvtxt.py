@@ -5,6 +5,9 @@ import csv
 import os
 import sys
 
+#SPACE_CHAR = "\xB7" # dot
+SPACE_CHAR = "\x97" # wide dash
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('file', type=checkFile, help='csv file to mess with')
@@ -17,7 +20,7 @@ def main():
     lens = [0] * cols
     for r in range(len(rows)):
         for c in range(min(cols, len(rows[r]))):
-            lens[c] = max(lens[c], len(rows[r][c]))
+            lens[c] = max(lens[c], len(rows[r][c].rstrip(SPACE_CHAR)))
 
     newrows = []
     for r in range(len(rows)):
@@ -26,8 +29,8 @@ def main():
             if c >= len(rows[r]):
                 value = ""
             else:
-                value = rows[r][c]
-            newrow.append(value.rstrip() if args.x else value.ljust(lens[c], " "))
+                value = rows[r][c].rstrip(SPACE_CHAR)
+            newrow.append(value.rstrip(SPACE_CHAR) if args.x else value.ljust(lens[c], SPACE_CHAR))
         newrows.append(newrow)
 
     with open(args.file, 'wb') as csvfile:
