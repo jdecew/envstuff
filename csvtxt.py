@@ -14,13 +14,13 @@ def main():
     parser.add_argument('-x', action='store_true', help='back to minified')
     args = parser.parse_args()
 
-    with open(args.file, 'rb') as csvfile:
+    with open(args.file, 'rbU') as csvfile:
         rows = [row for row in csv.reader(csvfile)]
     cols = max(len(row) for row in rows)
     lens = [0] * cols
     for r in range(len(rows)):
         for c in range(min(cols, len(rows[r]))):
-            lens[c] = max(lens[c], len(rows[r][c].rstrip(SPACE_CHAR)))
+            lens[c] = max(lens[c], cell_len(rows[r][c]))
 
     newrows = []
     for r in range(len(rows)):
@@ -30,11 +30,27 @@ def main():
                 value = ""
             else:
                 value = rows[r][c].rstrip(SPACE_CHAR)
-            newrow.append(value.rstrip(SPACE_CHAR) if args.x else value.ljust(lens[c], SPACE_CHAR))
+            newrow.append(cell_clean(value) if args.x else value.ljust(lens[c] - cell_quotes(value), SPACE_CHAR))
         newrows.append(newrow)
 
     with open(args.file, 'wb') as csvfile:
         csv.writer(csvfile, lineterminator="\n").writerows(newrows)
+
+def cell_clean(text):
+    return text.rstrip(SPACE_CHAR)
+
+def cell_quotes(text):
+    quotes = 0
+    if ',' in text:
+        quotes = 2
+    if '"' in text:
+        quotes = 2
+        quotes += text.count('"')
+    return quotes
+
+def cell_len(text):
+    return len(cell_clean(text)) + cell_quotes(text)
+
 
 def checkFile(file):
     if not os.path.exists(file):
