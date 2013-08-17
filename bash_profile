@@ -22,7 +22,8 @@ export APPORTABLE_ANDROID_HOME=/Users/jeffreydecew/apportable/apportable_sdk/too
 export XCODE_BIN=/Applications/Xcode.app/Contents/Developer/usr/bin
 
 export ANDROID_PATH=$APPORTABLE_ANDROID_HOME/tools:$APPORTABLE_ANDROID_HOME/platform-tools
-export PATH=$ANDROID_PATH:/usr/local/bin:$PATH:/Developer/Marmalade/6.2/s3e/bin:$DCF_ROOT/bin:$XCODE_BIN
+export ANDROID_SIGNING=~/workspace/androidsigning/tools
+export PATH=$ANDROID_PATH:/usr/local/bin:$PATH:/Developer/Marmalade/6.2/s3e/bin:$DCF_ROOT/bin:$XCODE_BIN:$ANDROID_SIGNING
 
 export CGDB=/usr/local/bin/cgdb
 
