@@ -124,7 +124,7 @@ alias tunnelfix="$ENVSTUFF/android/tunnelfix.sh"
 alias marmaladefix="$ENVSTUFF/android/marmaladefix.sh"
 
 # apportable aliases
-alias dt7="TARGET_ARCH_ABI=armv7a dt"
+alias dt7="TARGET_ARCH_ABI=armv7a-neon dt"
 
 # keygen aliases
 alias apksign="~/workspace/androidsigning/tools/apksign.py"
