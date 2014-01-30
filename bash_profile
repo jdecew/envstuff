@@ -81,6 +81,7 @@ gl () {
 PS1='\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]\[${c_gray}\]$(git log -1 --format=" %h " 2>/dev/null)\[${c_cyan}\]\W\[${c_sgr0}\]$ '
 
 # bash aliases
+alias bash_update="source ~/.bash_profile"
 alias .="pwd"
 alias la="ls -a"
 alias lsla="ls -la"
@@ -97,7 +98,6 @@ OK () {
   fi
 }
 function gfor() { $*; git submodule foreach --recursive $*;}
-alias logcat="adb logcat -v time"
 alias gs="git status"
 alias gd="git diff"
 alias gld='gl dragonwithassets'
@@ -129,6 +129,10 @@ alias gitrmdeleted='git status --porcelain | grep "^ D " | sed "s/^ D //" | xarg
 # apportable aliases
 alias dt7="TARGET_ARCH_ABI=armv7a-neon dt"
 alias toolchain="$ENVSTUFF/android/toolchain_picker.py"
+
+# android aliases
+alias logcat="adb logcat -v time"
+alias greplog="adb logcat -v time | grep"
 
 # keygen aliases
 alias apksign="~/workspace/androidsigning/tools/apksign.py"
