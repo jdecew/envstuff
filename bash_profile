@@ -106,23 +106,25 @@ alias gld='gl dragonwithassets'
 alias gb="python ~/personal/envstuff/bash_utils.py git_branch_status"
 alias gbpu="python ~/personal/envstuff/bash_utils.py git_branch_pull_upstream"
 alias gf="git fetch --all && gb"
-alias pt="adb pull /mnt/sdcard/IwTrace.txt"
 alias gc='clear ; echo -e "\033[32m $ git status\033[0m" ; git status ; echo -e "\033[32m $ gb\033[0m"; gb'
 alias gu="git submodule sync && git submodule update --init --recursive"
 alias deepclean="gfor git clean -xdf"
 alias csvtxt="~/personal/envstuff/csvtxt.py"
-alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git rebase && git co master && git rebase svn-tracker && git push github master && git co working && git rebase master"
 alias gitrmdeleted='git status --porcelain | grep "^ D " | sed "s/^ D //" | xargs git rm'
 
+## old ##
+#alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git rebase && git co master && git rebase svn-tracker && git push github master && git co working && git rebase master"
+
 # marmalade aliases
-alias mkb60="/Developer/Marmalade/6.0/s3e/bin/mkb"
-alias mkb61="/Developer/Marmalade/6.1/s3e/bin/mkb"
-alias mkb62="/Developer/Marmalade/6.2/s3e/bin/mkb"
-alias p4login="p4 login < $ENVSTUFF/secret/.iw3d-p4.pass"
-alias p4pp="cd ~/marmalade/pcove/pocketgems && p4login && $ENVSTUFF/android/p4pp.sh"
-alias p4tunnel="$ENVSTUFF/secret/p4tunnel.sh"
-alias tunnelfix="$ENVSTUFF/android/tunnelfix.sh"
-alias marmaladefix="$ENVSTUFF/android/marmaladefix.sh"
+#alias mkb60="/Developer/Marmalade/6.0/s3e/bin/mkb"
+#alias mkb61="/Developer/Marmalade/6.1/s3e/bin/mkb"
+#alias mkb62="/Developer/Marmalade/6.2/s3e/bin/mkb"
+#alias pt="adb pull /mnt/sdcard/IwTrace.txt"
+#alias p4login="p4 login < $ENVSTUFF/secret/.iw3d-p4.pass"
+#alias p4pp="cd ~/marmalade/pcove/pocketgems && p4login && $ENVSTUFF/android/p4pp.sh"
+#alias p4tunnel="$ENVSTUFF/secret/p4tunnel.sh"
+#alias tunnelfix="$ENVSTUFF/android/tunnelfix.sh"
+#alias marmaladefix="$ENVSTUFF/android/marmaladefix.sh"
 
 # apportable aliases
 alias dt7="TARGET_ARCH_ABI=armv7a-neon dt"
