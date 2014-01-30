@@ -97,6 +97,7 @@ OK () {
   fi
 }
 function gfor() { $*; git submodule foreach --recursive $*;}
+alias logcat="adb logcat -v time"
 alias gs="git status"
 alias gd="git diff"
 alias gld='gl dragonwithassets'
