@@ -87,7 +87,14 @@ alias la="ls -a"
 alias lsla="ls -la"
 alias where="pwd"
 
-# git alias
+hammer ()
+{
+    WAIT_TIME=2
+    until ($@); do
+           sleep $(( WAIT_TIME ))
+    done
+}
+
 OK () {
   CODE=$?
   if [ "$CODE" == 0 ]
@@ -97,6 +104,8 @@ OK () {
     printf "\a\a" ; say ERROR. $CODE
   fi
 }
+
+# git alias
 function gfor() { $*; git submodule foreach --recursive $*;}
 alias gs="git status"
 alias gd="git diff"
