@@ -105,6 +105,8 @@ OK () {
   fi
 }
 
+alias internet='hammer curl http://www.google.com > /dev/null ; say "The Internet is BACK"'
+
 # git alias
 function gfor() { $*; git submodule foreach --recursive $*;}
 alias gs="git status"
