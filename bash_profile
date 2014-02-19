@@ -143,7 +143,7 @@ alias toolchain="$ENVSTUFF/android/toolchain_picker.py"
 
 # android aliases
 alias logcat="adb logcat -v time"
-alias greplog="adb logcat -v time | grep"
+alias greplog="adb logcat -v time | grep --color"
 
 # keygen aliases
 alias apksign="~/workspace/androidsigning/tools/apksign.py"
