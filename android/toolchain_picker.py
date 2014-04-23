@@ -13,7 +13,15 @@ def toolchain_options():
     options = {}
     for name in os.listdir(TOOLCHAINS_DIR):
         if name.startswith(TOOLCHAIN_PREFIX):
-            options[name] = os.path.join(TOOLCHAINS_DIR, name)
+            toolchain = os.path.join(TOOLCHAINS_DIR, name)
+            xcode_select = os.path.join(toolchain, 'xcode-select.path')
+            xcode = None
+            if os.path.isfile(xcode_select):
+                with open(xcode_select) as f:
+                    xcode = f.read().strip()
+            if xcode and not os.path.isdir(xcode):
+                print "===WARNING=== Could not find Xcode at: "+xcode
+            options[name] = {'path':toolchain, 'xcode':xcode}
     return options
 
 def current_toolchain():
@@ -21,18 +29,26 @@ def current_toolchain():
         return os.path.basename(subprocess.check_output(['readlink', '-n', TOOLCHAIN_PATH]))
     return None
 
-def set_toolchain(path):
+def set_toolchain(toolchain):
+    path = toolchain['path']
     os.remove(TOOLCHAIN_PATH)
     subprocess.check_call(['ln', '-sv', path, TOOLCHAIN_PATH])
+    if toolchain['xcode']:
+        subprocess.check_call(['sudo', 'xcode-select', '--switch', toolchain['xcode']])
+        subprocess.check_call(['xcode-select', '--print-path'])
 
 def main():
     print "Current Toolchain: %s" % current_toolchain()
     i = 0
     options_dict = toolchain_options()
     options_list = sorted(options_dict.items())
-    for name, path in options_list:
+    for name, toolchain in options_list:
+        path = toolchain['path']
+        xcode = ""
+        if toolchain['xcode']:
+            xcode = " (%s)" % toolchain['xcode'].replace("/Applications/","").replace("/Contents/Developer","")
         i += 1
-        print "%d: %s" % (i, name)
+        print "%d: %s%s" % (i, name, xcode)
     choice = raw_input("Pick a toolchain: ").strip()
     
     if choice in options_dict:
