@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 import collections
+import json
 import os
 import re
 import subprocess
@@ -12,7 +13,7 @@ This tool manages your Apportable toolchain folders by symlinking to them.
 * Toolchain folders are folders which start with 'toolchain_' in the '$DCF_ROOT/..' directory.
 * Feel free to modify toolchain folders manually - the tool reads from the file system every time it runs.
 * Toolchains are often linked to a version of xcode.
-    Change the version by editing the 'xcode-select.path' file inside the toolchain directory.
+    Change the version by editing the pg_config.json file inside the toolchain directory.
 * Select an option using its number, full directory name, or directory suffix.
 """
 
@@ -20,6 +21,7 @@ DCF_ROOT = os.path.abspath(os.path.expanduser(os.getenv('DCF_ROOT', '~/apportabl
 TOOLCHAIN_PATH = os.path.join(DCF_ROOT, "toolchain")
 TOOLCHAINS_DIR = os.path.dirname(DCF_ROOT)
 TOOLCHAIN_PREFIX = "toolchain_"
+DEFAULT_CONFIG = {'XCODE_SELECT_PATH':None,'VALID_PGX_VERSIONS':None}
 
 #print "TOOLCHAIN_PATH = " + TOOLCHAIN_PATH
 #print "TOOLCHAINS_DIR = " + TOOLCHAINS_DIR
@@ -29,14 +31,12 @@ def toolchain_options():
     for name in os.listdir(TOOLCHAINS_DIR):
         if name.startswith(TOOLCHAIN_PREFIX):
             toolchain = os.path.join(TOOLCHAINS_DIR, name)
-            xcode_select = os.path.join(toolchain, 'xcode-select.path')
-            xcode = None
-            if os.path.isfile(xcode_select):
-                with open(xcode_select) as f:
-                    xcode = f.read().strip()
+            cfg = load_config(name)
+            xcode = cfg.get('XCODE_SELECT_PATH', None)
+            pgxs = cfg.get('VALID_PGX_VERSIONS', None)
             if xcode and not os.path.isdir(xcode):
                 print "===WARNING=== Could not find Xcode at: "+xcode
-            options[name] = {'path':toolchain, 'xcode':xcode}
+            options[name] = {'path':toolchain, 'xcode':xcode, 'pgxs':pgxs}
     return options
 
 def current_toolchain():
@@ -47,11 +47,48 @@ def current_toolchain():
 def current_xcode_path():
     return subprocess.check_output(['xcode-select', '--print-path']).strip()
 
-def save_xcode_path(toolchain_name, xcode_path):
+def save_config(toolchain_name, config_dict):
+    toolchain = os.path.join(TOOLCHAINS_DIR, toolchain_name)
+    pg_config = os.path.join(toolchain, 'pg_config.json')
+    with open(pg_config, 'w') as f:
+        json.dump(config_dict, f, sort_keys=True, indent=4)
+
+def check_migrate_config(toolchain_name):
     toolchain = os.path.join(TOOLCHAINS_DIR, toolchain_name)
     xcode_select = os.path.join(toolchain, 'xcode-select.path')
-    with open(xcode_select, 'w') as f:
-        f.write(xcode_path)
+    new_config = {}
+    if os.path.isfile(xcode_select):
+        with open(xcode_select) as f:
+            xcode = f.read().strip()
+            if xcode:
+                new_config['XCODE_SELECT_PATH'] = xcode
+        os.remove(xcode_select)
+        # now that this file is deleted, we can call load_config without recursing infinitely
+    config = dict(DEFAULT_CONFIG)
+    config.update(load_config(toolchain_name, migrate=False))
+    config.update(new_config)
+    save_config(toolchain_name, config)
+    return config
+
+def load_config(toolchain_name, migrate=True):
+    if migrate:
+        return check_migrate_config(toolchain_name)
+    toolchain = os.path.join(TOOLCHAINS_DIR, toolchain_name)
+    pg_config = os.path.join(toolchain, 'pg_config.json')
+    if os.path.isfile(pg_config):
+        with open(pg_config, 'r') as f:
+            try:
+                return json.load(f)
+            except:
+                print "ERROR: Failed to read JSON in file: " + pg_config
+                raise
+    else:
+        return {}
+
+def save_xcode_path(toolchain_name, xcode_path):
+    cfg = load_config(toolchain_name)
+    cfg['XCODE_SELECT_PATH'] = xcode_path
+    save_config(toolchain_name, cfg)
 
 def set_toolchain(toolchain):
     path = toolchain['path']
@@ -122,11 +159,14 @@ def main():
     print "Toolchains:"
     for name, toolchain in options_list:
         path = toolchain['path']
+        pgxs = ""
+        if toolchain['pgxs']:
+            pgxs = " (%s)" % ', '.join("pgx_"+str(pgx) for pgx in toolchain['pgxs'])
         xcode = ""
         if toolchain['xcode']:
             xcode = " (%s)" % toolchain['xcode'].replace("/Applications/","").replace("/Contents/Developer","")
         i += 1
-        print "  %d: %s%s" % (i, name, xcode)
+        print "  %d: %s%s%s" % (i, name, pgxs, xcode)
     try:
         choice = raw_input("Pick an action or toolchain: ").strip()
     except KeyboardInterrupt:
