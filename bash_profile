@@ -8,24 +8,15 @@ export HISTCONTROL=erasedups
 #export PS1="\[\033[0;31m\]\W\[\033[0m\]$ "
 export FIGNORE=$FIGNORE:.pyc:.DS_Store
 
-export HTTP_HOST='localhost'
-export ANDROID_HOME=~/android
-export ANDROID_ROOT=$ANDROID_HOME
-export NDK_ROOT=~/android-ndk-r8
 export ENVSTUFF=~/personal/envstuff
-export P4CONFIG=.p4config
-export P4EDITOR=nano
 
-export DCF_ROOT=~/apportable/apportable_sdk
-export APPORTABLE_ANDROID_HOME=/Users/jeffreydecew/apportable/apportable_sdk/toolchain/macosx/android-sdk
+export ANDROID_HOME=~/android-sdk
+export ANDROID_BUILD_TOOLS_VERSION=android-4.4W
+export ANDROID_PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION
 
 export XCODE_BIN=/Applications/Xcode.app/Contents/Developer/usr/bin
 
-export ANDROID_PATH=$APPORTABLE_ANDROID_HOME/tools:$APPORTABLE_ANDROID_HOME/platform-tools
-export ANDROID_SIGNING=~/workspace/androidsigning/tools
-export PATH=$ANDROID_PATH:/usr/local/bin:$PATH:/Developer/Marmalade/6.2/s3e/bin:$DCF_ROOT/bin:$XCODE_BIN:$ANDROID_SIGNING
-
-export CGDB=/usr/local/bin/cgdb
+export PATH=~/bin:/usr/local/bin:$PATH:$ANDROID_PATH:$XCODE_BIN
 
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
@@ -82,10 +73,8 @@ PS1='\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]\[${c_gray}\]$(git log -
 
 # bash aliases
 alias bash_update="source ~/.bash_profile"
-alias .="pwd"
 alias la="ls -a"
 alias lsla="ls -la"
-alias where="pwd"
 
 hammer ()
 {
@@ -111,9 +100,6 @@ alias internet='hammer curl http://www.google.com > /dev/null ; say "The Interne
 function gfor() { $*; git submodule foreach --recursive $*;}
 alias gs="git status"
 alias gd="git diff"
-alias gld='gl dragonwithassets'
-#alias jgpp="git pull && ant clean test && git push"
-#alias cops="git co ~/workspace/tapzooandroid/*/project.properties"
 alias gb="python ~/personal/envstuff/bash_utils.py git_branch_status"
 alias gbpu="python ~/personal/envstuff/bash_utils.py git_branch_pull_upstream"
 alias gf="git fetch --all && gb"
@@ -123,31 +109,6 @@ alias deepclean="gfor git clean -xdf"
 alias csvtxt="~/personal/envstuff/csvtxt.py"
 alias gitrmdeleted='git status --porcelain | grep "^ D " | sed "s/^ D //" | xargs git rm'
 
-## old ##
-#alias svnpp="cd ~/openpath/svn/ && git svn fetch && git co svn-tracker && git rebase && git co master && git rebase svn-tracker && git push github master && git co working && git rebase master"
-
-# marmalade aliases
-#alias mkb60="/Developer/Marmalade/6.0/s3e/bin/mkb"
-#alias mkb61="/Developer/Marmalade/6.1/s3e/bin/mkb"
-#alias mkb62="/Developer/Marmalade/6.2/s3e/bin/mkb"
-#alias pt="adb pull /mnt/sdcard/IwTrace.txt"
-#alias p4login="p4 login < $ENVSTUFF/secret/.iw3d-p4.pass"
-#alias p4pp="cd ~/marmalade/pcove/pocketgems && p4login && $ENVSTUFF/android/p4pp.sh"
-#alias p4tunnel="$ENVSTUFF/secret/p4tunnel.sh"
-#alias tunnelfix="$ENVSTUFF/android/tunnelfix.sh"
-#alias marmaladefix="$ENVSTUFF/android/marmaladefix.sh"
-
-# apportable aliases
-alias dt7="TARGET_ARCH_ABI=armv7a-neon dt"
-alias toolchain="$ENVSTUFF/android/toolchain_picker.py"
-
 # android aliases
 alias logcat="adb logcat -v time"
 alias greplog="adb logcat -v time | grep --color"
-
-# keygen aliases
-alias apksign="~/workspace/androidsigning/tools/apksign.py"
-alias apkmod="~/workspace/androidsigning/tools/apkmod.py"
-alias apkinfo="~/workspace/androidsigning/tools/apkinfo.py"
-alias keygen="~/workspace/androidsigning/tools/keygen.py"
-export APKSIGN=~/workspace/androidsigning/tools/apksign.py
