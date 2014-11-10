@@ -1,5 +1,0 @@
-# submodule recursive cleaning
-git submodule foreach --recursive git clean -dx -n
-git submodule foreach --recursive git clean -dx -f
-
-
