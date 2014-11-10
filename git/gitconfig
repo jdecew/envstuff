@@ -1,6 +1,6 @@
 [user]
 	name = Jeff DeCew
-	email = jdecew@pocketgems.com
+	email = jeff@vida.com
 [color]
 	ui = always
 [core]
@@ -19,3 +19,7 @@
 	trustExitCode = true
 [merge]
 	tool = diffmerge
+[filter "media"]
+	clean = git media clean %f
+	smudge = git media smudge %f
+	required = true
