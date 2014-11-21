@@ -11,7 +11,7 @@ export FIGNORE=$FIGNORE:.pyc:.DS_Store
 export ENVSTUFF=~/personal/envstuff
 
 export ANDROID_HOME=~/android-sdk
-export ANDROID_BUILD_TOOLS_VERSION=android-4.4W
+export ANDROID_BUILD_TOOLS_VERSION=21.1.1
 export ANDROID_PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION
 
 export XCODE_BIN=/Applications/Xcode.app/Contents/Developer/usr/bin
