@@ -11,3 +11,10 @@ defaults write com.apple.finder ShowPathbar -bool true
 
 # terminal keybindings (MANUAL)
 # http://fplanque.com/dev/mac/mac-osx-terminal-page-up-down-home-end-of-line
+
+# gitconfig setup
+ln -s ~/personal/envstuff/git/gitconfig ~/.gitconfig
+
+# TODOs
+# Sublime Text user defaults
+# Sublime Text 'subl' command
