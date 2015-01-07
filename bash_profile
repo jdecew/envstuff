@@ -14,9 +14,11 @@ export ANDROID_HOME=~/android-sdk
 export ANDROID_BUILD_TOOLS_VERSION=21.1.1
 export ANDROID_PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION
 
+export ANDROID_STUDIO_BIN='/Applications/Android Studio.app/Contents/MacOS'
+
 export XCODE_BIN=/Applications/Xcode.app/Contents/Developer/usr/bin
 
-export PATH=~/bin:/usr/local/bin:$PATH:$ANDROID_PATH:$XCODE_BIN
+export PATH=~/bin:/usr/local/bin:$PATH:$ANDROID_PATH:$XCODE_BIN:$ANDROID_STUDIO_BIN
 
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
