@@ -111,6 +111,16 @@ alias deepclean="gfor git clean -xdf"
 alias csvtxt="~/personal/envstuff/csvtxt.py"
 alias gitrmdeleted='git status --porcelain | grep "^ D " | sed "s/^ D //" | xargs git rm'
 
+# webserver aliases
+alias ws_init="pyenv activate vida-webserver"
+alias ws_update="pip install -r requirements.txt && npm install && ./manage.py migrate"
+alias ws_start_web="./manage.py runserver"
+alias ws_start_back="foreman start -f Procfile.dev"
+
 # android aliases
 alias logcat="adb logcat -v time"
 alias greplog="adb logcat -v time | grep --color"
+
+# initializers
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
