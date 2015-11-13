@@ -1,4 +1,7 @@
 
+# more ZSH customization
+unsetopt CDABLE_VARS
+
 # Erase duplicates
 export HISTCONTROL=erasedups
 export FIGNORE=$FIGNORE:.pyc:.DS_Store
