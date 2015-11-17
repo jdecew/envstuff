@@ -1,6 +1,6 @@
 [user]
 	name = Jeff DeCew
-	email = jeff@vida.com
+	email = jeff@skyd.io
 [color]
 	ui = always
 [core]
@@ -23,7 +23,7 @@
 	cmd = studio merge $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE") $(cd $(dirname "$BASE") && pwd)/$(basename "$BASE") $(cd $(dirname "$MERGED") && pwd)/$(basename "$MERGED")
     trustExitCode = true
 [diff]
-   tool = studio
+   tool = meld
 [difftool "studio"]
    cmd = studio diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
 [filter "media"]
