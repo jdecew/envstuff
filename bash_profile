@@ -42,7 +42,10 @@ gl () {
 
 PS1='\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]\[${c_gray}\]$(git log -1 --format=" %h " 2>/dev/null)\[${c_cyan}\]\W\[${c_sgr0}\]$ '
 
-#source /usr/local/etc/bash_completion.d/git-completion.bash
+if [ `uname` == Darwin ]; then
+  # Add git completion from Homebrew installation of Git on OSX
+  source /usr/local/etc/bash_completion.d/git-completion.bash
+fi
 
 c_yellow=`tput setaf 3`
 c_blue=`tput setaf 4`
