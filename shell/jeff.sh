@@ -1,6 +1,7 @@
 # Erase duplicates
 export HISTCONTROL=erasedups
 export FIGNORE=$FIGNORE:.pyc:.DS_Store
+export PYTHONDONTWRITEBYTECODE=1
 
 export ANDROID_HOME=~/android-sdk
 export ANDROID_BUILD_TOOLS_VERSION=21.1.1
