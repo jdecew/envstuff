@@ -16,6 +16,9 @@ export PATH=~/bin:/usr/local/bin:$PATH:$ANDROID_PATH:$XCODE_BIN:$ANDROID_STUDIO_
 # add depot_tools to path
 export PATH=~/workspace/depot_tools:$PATH
 
+# add diffmerge to path
+export PATH=$PATH:/Applications/DiffMerge.app/Contents/MacOS
+
 alias lsla="ls -la"
 
 
