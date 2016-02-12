@@ -14,14 +14,14 @@ parse_git_branch ()
   echo -e $gitver
 }
 
-colored_arrow()
+arrow_color()
 {
   if [ "$?" = "0" ] ; then
     color="${c_green}"
   else
     color="${c_red}"
   fi
-  echo -ne "${color}→${c_sgr0}"
+  echo -ne "${color}"
 }
 
 branch_color ()
@@ -50,7 +50,7 @@ gl () {
     fi
 }
 
-PS1='\[$(colored_arrow)\] \[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]\[${c_gray}\]$(git log -1 --format=" %h " 2>/dev/null)\[${c_cyan}\]\W\[${c_sgr0}\]$ '
+PS1='\[$(arrow_color)\]→ \[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]\[${c_gray}\]$(git log -1 --format=" %h " 2>/dev/null)\[${c_cyan}\]\W\[${c_sgr0}\]$ '
 
 if [ `uname` == Darwin ]; then
   # Add git completion from Homebrew installation of Git on OSX
