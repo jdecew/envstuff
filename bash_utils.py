@@ -116,7 +116,7 @@ def git_branch_status(rawargs):
         return 1
     lines = output.splitlines()
     rows = []
-    lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|no branch|detached from [^ )]+)+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(?P<fullmessage>(\[(?P<remote>[^]]+)\])? ?(?P<message>.*))$")
+    lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|[(]no branch[^)]*[)]|[(]detached from [^)]+[)])+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(?P<fullmessage>(\[(?P<remote>[^]]+)\])? ?(?P<message>.*))$")
     rm = re.compile("(?P<branch>\S+)(:|$)\s*(?P<gone>gone)?,?(ahead (?P<ahead>\d+))?,?\s*(behind (?P<behind>\d+))?") #origin/foo: ahead 5, behind 5
     for line in lines:
         line = line.strip()
