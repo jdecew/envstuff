@@ -17,7 +17,13 @@ class BC:
     BLUE = '\033[34m'
     PURPLE = '\033[35m'
     CYAN = '\033[36m'
+    CYAN_STRIKETHROUGH = '\033[9;36m'
     ENDC = '\033[0m'
+
+    BOLD = '\033[1m'
+    ITALIC = '\033[3m'
+    UNDERLINE = '\033[4m'
+    STRIKETHROUGH = '\033[9m'
 
     def disable(self):
         self.RED = ''
@@ -111,7 +117,7 @@ def git_branch_status(rawargs):
     lines = output.splitlines()
     rows = []
     lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|no branch|detached from [^ )]+)+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(?P<fullmessage>(\[(?P<remote>[^]]+)\])? ?(?P<message>.*))$")
-    rm = re.compile("(?P<branch>\S+)(:|$)\s*(ahead (?P<ahead>\d+))?,?\s*(behind (?P<behind>\d+))?") #origin/foo: ahead 5, behind 5
+    rm = re.compile("(?P<branch>\S+)(:|$)\s*(?P<gone>gone)?,?(ahead (?P<ahead>\d+))?,?\s*(behind (?P<behind>\d+))?") #origin/foo: ahead 5, behind 5
     for line in lines:
         line = line.strip()
         row = {"padding":"#  "}
@@ -129,7 +135,8 @@ def git_branch_status(rawargs):
             if rmatch:
                 row["ahead"] = BC.GREEN_BOLD+"+"+rmatch.group("ahead")+BC.ENDC if rmatch.group("ahead") else ""
                 row["behind"] = BC.RED_BOLD+"-"+rmatch.group("behind")+BC.ENDC if rmatch.group("behind") else ""
-                row["remoteBranch"] = BC.CYAN+rmatch.group("branch")+BC.ENDC
+                branch_color = BC.CYAN_STRIKETHROUGH if rmatch.group("gone") else BC.CYAN
+                row["remoteBranch"] = branch_color+rmatch.group("branch")+BC.ENDC
             else:
                 row["message"] = BC.LIGHT_GRAY+match.group("fullmessage")+BC.ENDC
         if not remote or not rmatch:
