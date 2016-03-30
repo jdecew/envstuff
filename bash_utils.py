@@ -104,7 +104,7 @@ def git_branch_pull_upstream(rawargs):
     with open(reffile,'w') as f:
         f.write(upstream_sha+"\n")
     return 0
-    
+
 def git_branch_status(rawargs):
     parser = argparse.ArgumentParser(prog='git_branch_status')
     parser.add_argument('--verbose', '-v', action='store_true', help='include commit message')
@@ -146,10 +146,10 @@ def git_branch_status(rawargs):
     cols = ["padding","branch","current","ahead","behind","remoteBranch","sha"]
     if verbose: cols += ["message"]
     counts={}
-    for col in cols: 
+    for col in cols:
         counts[col] = 0
     for row in rows:
-        for col in cols: 
+        for col in cols:
             counts[col] = max(counts[col], vislen(row[col]))
     for col, count in counts.items():
         if count == 0:
@@ -171,7 +171,7 @@ def get_git_folder():
         relpath = re.match(r"gitdir:\s*(?P<path>.*)\s*", open(path).read()).group("path")
         return os.path.normpath(os.path.join(path, "..", relpath))
     else:
-        return None        
+        return None
 
 def colored(value, color):
     if color:
