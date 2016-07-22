@@ -1,5 +1,5 @@
 # add aircam home
-export AIRCAM=~/aircam
+export AIRCAM_ROOT=~/aircam
 
 # add aircam tools
 export PATH=$PATH:$AIRCAM/build/host_aircam/bin
