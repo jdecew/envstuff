@@ -2,8 +2,8 @@
 export AIRCAM_ROOT=~/aircam
 
 # add aircam tools
-export PATH=$PATH:$AIRCAM/build/host_aircam/bin
-export PATH=$PATH:$AIRCAM/build/host_third_party/bin
+export PATH=$PATH:$AIRCAM_ROOT/build/host_aircam/bin
+export PATH=$PATH:$AIRCAM_ROOT/build/host_third_party/bin
 
 # add python site packages to path (mac specific)
 export PYTHON_SITE=~/Library/Python/2.7/bin
