@@ -91,20 +91,7 @@ def git_branch_pull_upstream(rawargs):
     print "%s %s upstream to %s %s (%s..%s)" % colored_l((verb, branch, upstream, plusminus, branch_sha[:7], upstream_sha[:7]), (None, BC.GREEN, BC.CYAN, None, None, None))
     if dryrun:
         return 0
-    gitfolder = get_git_folder()
-    reffile = os.path.join(gitfolder, "refs", "heads", branch)
-    if os.path.isfile(reffile):
-        with open(reffile) as f:
-            if f.read() != branch_sha + "\n":
-                print "fatal: reffile contents not as expected"
-                return 1
-    elif os.path.exists(reffile):
-        print "fatal: reffile exists but not a file: %s" % reffile
-        return 1
-    else:
-        print "warning: creating nonexistent reffile (did you run 'git remote prune'?)"
-    with open(reffile,'w') as f:
-        f.write(upstream_sha+"\n")
+    subprocess.check_call(['git', 'branch', '-f', branch, upstream_sha])
     return 0
 
 def git_branch_status(rawargs):
