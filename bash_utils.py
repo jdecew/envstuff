@@ -49,9 +49,19 @@ def main():
     print "Unknown util: "+sys.argv[1]
     return 1
 
+
+def local_branch(branch):
+    localbranches = bash_output("git branch --no-color --list '%s'" % branch)
+    if localbranches is None:
+        raise ValueError('Not a repository')
+    if localbranches not in ("  "+branch+"\n", "* "+branch+"\n"):
+        raise argparse.ArgumentTypeError("'%s' is not a local branch" % branch)
+    return branch
+
+
 def git_branch_pull_upstream(rawargs):
     parser = argparse.ArgumentParser(prog='git_branch_pull_upstream')
-    parser.add_argument('localbranch', help='local branch')
+    parser.add_argument('branch', help='local branch name', nargs='+', type=local_branch)
     parser.add_argument('--dryrun', '-n', action='store_true', help='dry run')
     parser.add_argument('--force', '-f', action='store_true', help='force')
     parser.add_argument('--quiet', '-q', action='store_true', help='quiet')
@@ -60,38 +70,34 @@ def git_branch_pull_upstream(rawargs):
     dryrun = not not args.dryrun
     force = not not args.force
     loud = not args.quiet
-    branch = args.localbranch
-    localbranches = bash_output("git branch --no-color --list '%s'" % branch)
-    if localbranches is None:
-        # not a git repo; user already warned via stdout
+    errors = []
+    for branch in args.branch:
+        upstream = bash_output("git for-each-ref --format='%%(upstream:short)' -- 'refs/heads/%s'" % branch).strip()
+        if not upstream:
+            errors.append("error: '%s' has no upstream" % branch)
+            continue
+        branch_sha = git_merge_base(branch)
+        upstream_sha = git_merge_base(upstream)
+        if branch_sha == upstream_sha:
+            print "note: '%s' already up to date." % branch
+            continue
+        mergebase = git_merge_base(branch_sha, upstream_sha)
+        ahead = git_diff_count(mergebase, branch_sha)
+        behind = git_diff_count(mergebase, upstream_sha)
+        plus = colored("+%d" % ahead, BC.GREEN_BOLD) if ahead else ""
+        minus = colored("-%d" % behind, BC.RED_BOLD) if behind else ""
+        plusminus = "<%s>" % ("%s %s" % (plus, minus)).strip()
+        if ahead and not force:
+            errors.append("error: can't pull %s upstream to %s <+%s -%s> (%s..%s) (Forced update required)" % (branch, upstream, ahead, behind, branch_sha[:7], upstream_sha[:7]))
+            continue
+        verb = "would pull" if dryrun else "pulling"
+        print "%s '%s' upstream to %s %s (%s..%s)" % colored_l((verb, branch, upstream, plusminus, branch_sha[:7], upstream_sha[:7]), (None, BC.GREEN, BC.CYAN, None, None, None))
+        if dryrun:
+            continue
+        subprocess.check_call(['git', 'branch', '-f', branch, upstream_sha])
+    if errors:
+        print '{} errors:\n{}'.format(len(errors), '\n'.join(errors))
         return 1
-    if localbranches not in ("  "+branch+"\n", "* "+branch+"\n"):
-        print localbranches
-        print "error: '%s' is not a local branch" % branch
-        return 1
-    upstream = bash_output("git for-each-ref --format='%%(upstream:short)' -- 'refs/heads/%s'" % branch).strip()
-    if not upstream:
-        print "error: '%s' has no upstream" % branch
-        return 1
-    branch_sha = git_merge_base(branch)
-    upstream_sha = git_merge_base(upstream)
-    if branch_sha == upstream_sha:
-        print "Already up to date."
-        return 1
-    mergebase = git_merge_base(branch_sha, upstream_sha)
-    ahead = git_diff_count(mergebase, branch_sha)
-    behind = git_diff_count(mergebase, upstream_sha)
-    plus = colored("+%d" % ahead, BC.GREEN_BOLD) if ahead else ""
-    minus = colored("-%d" % behind, BC.RED_BOLD) if behind else ""
-    plusminus = "<%s>" % ("%s %s" % (plus, minus)).strip()
-    if ahead and not force:
-        print "error: can't pull %s upstream to %s <+%s -%s> (%s..%s) (Forced update required)" % (branch, upstream, ahead, behind, branch_sha[:7], upstream_sha[:7])
-        return 1
-    verb = "would pull" if dryrun else "pulling"
-    print "%s %s upstream to %s %s (%s..%s)" % colored_l((verb, branch, upstream, plusminus, branch_sha[:7], upstream_sha[:7]), (None, BC.GREEN, BC.CYAN, None, None, None))
-    if dryrun:
-        return 0
-    subprocess.check_call(['git', 'branch', '-f', branch, upstream_sha])
     return 0
 
 def git_branch_status(rawargs):
