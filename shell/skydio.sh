@@ -14,3 +14,5 @@ export OSG_LIBRARY_PATH=/home/skydio/aircam/build/host_third_party/lib
 
 # fix username mismatch
 export SKYREV_REMOTE_USER=jeff
+
+alias ca="cd ~/aircam"
