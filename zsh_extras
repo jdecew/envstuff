@@ -1,6 +1,10 @@
 
 # more ZSH customization
 unsetopt CDABLE_VARS
+setopt NO_MENU_COMPLETE
+setopt NO_AUTO_MENU
+setopt BASH_AUTO_LIST
+setopt COMPLETE_IN_WORD
 
 # minimal import of other stuff
 export ENVSTUFF=~/personal/envstuff
