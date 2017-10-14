@@ -63,6 +63,8 @@ alias deepclean="gfor git clean -xdf"
 alias csvtxt="~/personal/envstuff/csvtxt.py"
 alias gitrmdeleted='git status --porcelain | grep "^ D " | sed "s/^ D //" | xargs git rm'
 
+alias gitfire="git checkout -b fire/$USER/$RANDOM ; git commit -m'staged' --allow-empty ; git commit -am'working' --allow-empty ; git add . ; git commit -am'untracked' --allow-empty ; git push -u origin `git branch --no-color | grep \* | cut -d ' ' -f2`"
+
 # android aliases
 alias logcat="adb logcat -v time"
 alias greplog="adb logcat -v time | grep --color"
