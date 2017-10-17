@@ -5,7 +5,7 @@ export PYTHONDONTWRITEBYTECODE=1
 
 export ANDROID_HOME=~/android-sdk
 export ANDROID_BUILD_TOOLS_VERSION=21.1.1
-export ANDROID_PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION:$ANDROID_HOME/ndk-bundle
+export ANDROID_PATH=$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION:$ANDROID_HOME/ndk-bundle
 
 export ANDROID_STUDIO_BIN='/Applications/Android Studio.app/Contents/MacOS'
 
