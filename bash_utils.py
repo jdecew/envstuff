@@ -1,3 +1,4 @@
+from __future__ import print_function
 import argparse
 import os
 import platform
@@ -38,7 +39,7 @@ class BC:
 
 def main():
     if len(sys.argv)==1:
-        print "Which util? -- [git_branch_status]"
+        print("Which util? -- [git_branch_status]")
         return 1
     if sys.argv[1] == "git_branch_status":
         return git_branch_status(sys.argv[2:])
@@ -46,7 +47,7 @@ def main():
         return git_branch_pull_upstream(sys.argv[2:])
     if sys.argv[1] == "test":
         return test(sys.argv[2:])
-    print "Unknown util: "+sys.argv[1]
+    print("Unknown util: " + sys.argv[1])
     return 1
 
 
@@ -79,7 +80,7 @@ def git_branch_pull_upstream(rawargs):
         branch_sha = git_merge_base(branch)
         upstream_sha = git_merge_base(upstream)
         if branch_sha == upstream_sha:
-            print "note: '%s' already up to date." % branch
+            print("note: '%s' already up to date." % branch)
             continue
         mergebase = git_merge_base(branch_sha, upstream_sha)
         ahead = git_diff_count(mergebase, branch_sha)
@@ -91,12 +92,12 @@ def git_branch_pull_upstream(rawargs):
             errors.append("error: can't pull %s upstream to %s <+%s -%s> (%s..%s) (Forced update required)" % (branch, upstream, ahead, behind, branch_sha[:7], upstream_sha[:7]))
             continue
         verb = "would pull" if dryrun else "pulling"
-        print "%s '%s' upstream to %s %s (%s..%s)" % colored_l((verb, branch, upstream, plusminus, branch_sha[:7], upstream_sha[:7]), (None, BC.GREEN, BC.CYAN, None, None, None))
+        print("%s '%s' upstream to %s %s (%s..%s)" % colored_l((verb, branch, upstream, plusminus, branch_sha[:7], upstream_sha[:7]), (None, BC.GREEN, BC.CYAN, None, None, None)))
         if dryrun:
             continue
         subprocess.check_call(['git', 'branch', '-f', branch, upstream_sha])
     if errors:
-        print '{} errors:\n{}'.format(len(errors), '\n'.join(errors))
+        print('{} errors:\n{}'.format(len(errors), '\n'.join(errors)))
         return 1
     return 0
 
@@ -109,7 +110,7 @@ def git_branch_status(rawargs):
     output = bash_output('git branch --no-color -v -v')
     if not output:
         return 1
-    lines = output.splitlines()
+    lines = output.decode('utf-8').splitlines()
     rows = []
     lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|[(][-_/ A-Za-z0-9]+[)])+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(?P<fullmessage>(\[(?P<remote>[^]]+)\])? ?(?P<message>.*))$")
     rm = re.compile("(?P<branch>\S+)(:|$)\s*(?P<gone>gone)?,?(ahead (?P<ahead>\d+))?,?\s*(behind (?P<behind>\d+))?") #origin/foo: ahead 5, behind 5
@@ -118,7 +119,7 @@ def git_branch_status(rawargs):
         row = {"padding":"#  "}
         rows.append(row)
         match = lm.match(line)
-        if not match: print repr(line)
+        if not match: print(repr(line))
         remote = match.group("remote") if match.group("remote") else ""
         row["sha"] = BC.LIGHT_GRAY+match.group("sha")+BC.ENDC
         row["message"] = BC.LIGHT_GRAY+match.group("message")+BC.ENDC
@@ -151,8 +152,8 @@ def git_branch_status(rawargs):
             cols.remove(col)
     for row in rows:
         for col in cols:
-            print visljust(row[col], counts[col]),
-        print ""
+            print(visljust(row[col], counts[col]), end=" ")
+        print("")
     return 0
 
 def get_git_folder():
@@ -203,7 +204,7 @@ def test(args):
     foo = BC.GREEN+"foo"+BC.ENDC
     foolen=vislen(foo)
     if not foolen==3: raise AssertionError("vislen("+repr(foo)+") should be 3 - was "+str(foolen))
-    print "All tests passed"
+    print("All tests passed")
 
 if __name__ == "__main__":
     sys.exit(main())
