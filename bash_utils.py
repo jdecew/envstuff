@@ -7,6 +7,12 @@ import re
 import subprocess
 import sys
 
+def is_simpler_terminal():
+    if platform.system() == 'Darwin':
+        return True
+    # when SSHing into the computer, don't use strikethrough
+    return bool(os.getenv('SSH_TTY') or os.getenv('SSH_CLIENT'))
+
 class BC:
     LIGHT_GRAY = '\033[37m'
     DARK_GRAY = '\033[30m'
@@ -19,7 +25,7 @@ class BC:
     BLUE = '\033[34m'
     PURPLE = '\033[35m'
     CYAN = '\033[36m'
-    CYAN_DIFFERENT = '\033[7;36m' if platform.system() == 'Darwin' else '\033[9;36m'
+    CYAN_DIFFERENT = '\033[7;36m' if is_simpler_terminal() else '\033[9;36m'
     ENDC = '\033[0m'
 
     BOLD = '\033[1m'
