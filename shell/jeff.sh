@@ -65,6 +65,10 @@ alias gitrmdeleted='git status --porcelain | grep "^ D " | sed "s/^ D //" | xarg
 
 alias gitfire="git checkout -b fire/$USER/$RANDOM ; git commit -m'staged' --allow-empty ; git commit -am'working' --allow-empty ; git add . ; git commit -am'untracked' --allow-empty ; git push -u origin `git branch --no-color | grep \* | cut -d ' ' -f2`"
 
+# Show me all my branches, locally and remote
+alias whogit="git for-each-ref --format='%(authoremail) %09 %(refname)' --sort=committerdate"
+alias mygit="whogit | grep `git config --get user.email`"
+
 # android aliases
 alias logcat="adb logcat -v time"
 alias greplog="adb logcat -v time | grep --color"
