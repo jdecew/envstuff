@@ -10,6 +10,9 @@ export PATH=$PATH:$PYTHON_SITE
 # renderworld fix
 export OSG_LIBRARY_PATH=/home/skydio/aircam/build/host_third_party/lib
 
+# performance
+export DISABLE_MOBILE_PTREE_CHECKING=1
+
 # fix username mismatch
 export SKYREV_REMOTE_USER=jeff
 
