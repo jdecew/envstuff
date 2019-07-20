@@ -5,40 +5,40 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 
 parse_git_branch ()
 {
-  if git rev-parse --git-dir --no-color >/dev/null 2>&1
-  then
-          gitver="$(git branch --no-color 2>/dev/null| sed -n '/^\*/s/^\* //p')"
-  else
-          return 0
-  fi
-  echo -e $gitver
+    if git rev-parse --git-dir --no-color >/dev/null 2>&1
+    then
+        gitver="$(git branch --no-color 2>/dev/null| sed -n '/^\*/s/^\* //p')"
+    else
+        return 0
+    fi
+    echo -e $gitver
 }
 
 arrow_color()
 {
-  if [ "$?" = "0" ] ; then
-    color="${c_green}"
-  else
-    color="${c_red}"
-  fi
-  echo -ne "${color}"
+    if [ "$?" = "0" ] ; then
+        color="${c_green}"
+    else
+        color="${c_red}"
+    fi
+    echo -ne "${color}"
 }
 
 branch_color ()
 {
-        if git rev-parse --git-dir >/dev/null 2>&1
+    if git rev-parse --git-dir >/dev/null 2>&1
+    then
+        color=""
+        if git diff --quiet 2>/dev/null >&2
         then
-                color=""
-                if git diff --quiet 2>/dev/null >&2
-                then
-                        color="${c_green}"
-                else
-                        color="${c_red}"
-                fi
+            color="${c_green}"
         else
-                return 0
+            color="${c_red}"
         fi
-        echo -ne $color
+    else
+        return 0
+    fi
+    echo -ne $color
 }
 
 gl () {
@@ -46,11 +46,18 @@ gl () {
     then
         git log $(git merge-base origin/master HEAD)^.. --oneline
     else
-  git log $(git merge-base origin/$1 HEAD)^.. --oneline
+        git log $(git merge-base origin/$1 HEAD)^.. --oneline
     fi
 }
 
-PS1='\[$(arrow_color)\]→ \[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]\[${c_gray}\]$(git log -1 --format=" %h " 2>/dev/null)\[${c_cyan}\]\W\[${c_sgr0}\]$ '
+ssh_target () {
+    if [ -n "$SSH_CLIENT" ]
+    then
+        echo "${c_purple}@$HOSTNAME "
+    fi
+}
+
+PS1='\[$(arrow_color)\]→ \[$(ssh_target)\]\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]\[${c_gray}\]$(git log -1 --format=" %h " 2>/dev/null)\[${c_cyan}\]\W\[${c_sgr0}\]$ '
 
 if [ `uname` == Darwin ]; then
   # Add git completion from Homebrew installation of Git on OSX

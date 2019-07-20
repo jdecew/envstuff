@@ -17,3 +17,4 @@ export DISABLE_MOBILE_PTREE_CHECKING=1
 export SKYREV_REMOTE_USER=jeff
 
 alias ca="cd ~/aircam"
+alias ca2="cd ~/aircam2"
