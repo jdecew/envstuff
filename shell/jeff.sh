@@ -11,7 +11,7 @@ export ANDROID_STUDIO_BIN='/Applications/Android Studio.app/Contents/MacOS'
 
 export XCODE_BIN=/Applications/Xcode.app/Contents/Developer/usr/bin
 
-export PATH=~/bin:/usr/local/bin:$PATH:$ANDROID_PATH:$XCODE_BIN:$ANDROID_STUDIO_BIN
+export PATH=~/bin:/usr/local/bin:$ANDROID_PATH:$PATH:$XCODE_BIN:$ANDROID_STUDIO_BIN
 
 # add depot_tools to path
 export PATH=~/workspace/depot_tools:$PATH
