@@ -51,7 +51,7 @@ gl () {
 }
 
 ssh_target () {
-    if [ -n "$SSH_CLIENT" ]
+    if [ "$SSH_CLIENT" ]
     then
         echo -ne "${c_purple}@$HOSTNAME "
     fi
