@@ -53,7 +53,7 @@ gl () {
 ssh_target () {
     if [ -n "$SSH_CLIENT" ]
     then
-        echo "${c_purple}@$HOSTNAME "
+        echo -ne "${c_purple}@$HOSTNAME "
     fi
 }
 
