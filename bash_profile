@@ -53,11 +53,11 @@ gl () {
 ssh_target () {
     if [ "$SSH_CLIENT" ]
     then
-        echo -ne "${c_purple}@$HOSTNAME "
+        echo -ne "@$HOSTNAME "
     fi
 }
 
-PS1='\[$(arrow_color)\]→ \[$(ssh_target)\]\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]\[${c_gray}\]$(git log -1 --format=" %h " 2>/dev/null)\[${c_cyan}\]\W\[${c_sgr0}\]$ '
+PS1='\[$(arrow_color)\]→ \[${c_purple}\]$(ssh_target)\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]\[${c_gray}\]$(git log -1 --format=" %h " 2>/dev/null)\[${c_cyan}\]\W\[${c_sgr0}\]$ '
 
 if [ `uname` == Darwin ]; then
   # Add git completion from Homebrew installation of Git on OSX
