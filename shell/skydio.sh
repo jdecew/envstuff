@@ -21,10 +21,10 @@ alias ca2="cd ~/aircam2"
 
 
 # Alias for Yubikey pin prompt
-if [ `uname` == Darwin ]; then
-  alias yubact="ssh-add -e /usr/local/lib/opensc-pkcs11.so; ssh-add -s /usr/local/lib/opensc-pkcs11.so"
+if [ "`uname`" = "Darwin" ]; then
+alias yubact="ssh-add -e /usr/local/lib/opensc-pkcs11.so; ssh-add -s /usr/local/lib/opensc-pkcs11.so"
 else
-  alias yubact="ssh-add -e /usr/lib/x86_64-linux-gnu/opensc-pkcs11.so; ssh-add -s /usr/lib/x86_64-linux-gnu/opensc-pkcs11.so"
+alias yubact="ssh-add -e /usr/lib/x86_64-linux-gnu/opensc-pkcs11.so; ssh-add -s /usr/lib/x86_64-linux-gnu/opensc-pkcs11.so"
 fi
 
 # # Auto finds ssh-agent
