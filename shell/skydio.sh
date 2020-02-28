@@ -18,6 +18,7 @@ export SKYREV_REMOTE_USER=jeff
 
 alias ca="cd ~/aircam"
 alias ca2="cd ~/aircam2"
+alias skyvpn="sudo openvpn --config ~/skydio.ovpn"
 
 
 # Alias for Yubikey pin prompt
