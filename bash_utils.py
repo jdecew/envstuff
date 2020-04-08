@@ -116,7 +116,7 @@ def git_branch_status(rawargs):
     output = bash_output('git branch --no-color -v -v')
     if not output:
         return 1
-    lines = output.decode('utf-8').splitlines()
+    lines = output.splitlines()
     rows = []
     lm = re.compile("(?P<current>[*]?)\s*(?P<local>(\S|[(][-_/ A-Za-z0-9]+[)])+)(?P<localpad>\s+?)(?P<sha>[0-9a-f]+)\s+(?P<fullmessage>(\[(?P<remote>[^]]+)\])? ?(?P<message>.*))$")
     rm = re.compile("(?P<branch>\S+)(:|$)\s*(?P<gone>gone)?,?(ahead (?P<ahead>\d+))?,?\s*(behind (?P<behind>\d+))?") #origin/foo: ahead 5, behind 5
@@ -194,7 +194,7 @@ def git_merge_base(refname, alt=None):
 
 def bash_output(command, raiseError=False):
     try:
-        return subprocess.check_output(command, shell=True)
+        return subprocess.check_output(command, shell=True).decode('utf-8')
     except:
         if raiseError:
             raise
