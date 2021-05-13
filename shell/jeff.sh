@@ -26,18 +26,27 @@ export EDITOR='nano'
 
 hammer ()
 {
+    ATTEMPT=1
     WAIT_TIME=2
     until ($@); do
-           sleep $(( WAIT_TIME ))
+        echo "hammer: still broken on attempt $ATTEMPT"
+        ATTEMPT=$((ATTEMPT+1))
+        sleep $(( WAIT_TIME ))
     done
+    echo "hammer: it worked on attempt $ATTEMPT"
 }
+
 
 crowbar ()
 {
+    ATTEMPT=1
     WAIT_TIME=1
     while ($@); do
-           sleep $(( WAIT_TIME ))
+        echo "crowbar: still working on attempt $ATTEMPT"
+        ATTEMPT=$((ATTEMPT+1))
+        sleep $(( WAIT_TIME ))
     done
+    echo "crowbar: broke it on attempt $ATTEMPT"
 }
 
 OK () {
